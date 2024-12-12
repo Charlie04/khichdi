@@ -1,0 +1,104 @@
+3.Linked List
+
+#include <stdio.h>
+#include <stdlib.h>
+
+// Define the struct and use typedef to simplify the code
+typedef struct link {
+    int info;
+    struct link *next;
+} link;
+
+// Function declarations
+link* createList(link *start);
+void display(link *start);
+link* insertAtFirst(link *start, int x);
+link* insertAtLast(link *start, int x);
+
+int main() {
+    link *start = NULL;  // Use typedef to simplify struct usage
+    char ch;
+    int x;
+
+    do {
+        printf("C for Creation\n");
+        printf("D for Display\n");
+        printf("Q for Quit\n");
+        scanf(" %c", &ch);  // Add a space before %c to consume any leftover whitespace
+
+        switch(ch) {
+            case 'c':
+            case 'C':
+                start = createList(start);
+                break;
+            case 'd':
+            case 'D':
+                display(start);
+                break;
+        }
+    } while (ch != 'Q' && ch != 'q');  // Consider allowing lowercase 'q' for quitting
+
+    return 0;
+}
+
+link* createList(link *start) {
+    link *tmp, *prv;
+    int no;
+
+    tmp = prv = NULL;
+    printf("Enter any number - 0 to exit: ");
+    scanf("%d", &no);
+
+    while (no != 0) {
+        tmp = (link *)malloc(sizeof(link));
+        tmp->info = no;
+        tmp->next = NULL;
+
+        if (start == NULL)
+            start = tmp;
+        else
+            prv->next = tmp;
+        prv = tmp;
+
+        printf("Enter any number - 0 to exit: ");
+        scanf("%d", &no);
+    }
+
+    return start;
+}
+
+void display(link *start) {
+    link *tmp = start;
+    while (tmp != NULL) {
+        printf("Info = %d\n", tmp->info);
+        tmp = tmp->next;
+    }
+}
+
+link* insertAtFirst(link *start, int x) {
+    link *new1;
+    new1 = (link *)malloc(sizeof(link));
+    new1->info = x;
+    new1->next = start;
+    return new1;
+}
+
+link* insertAtLast(link *start, int x) {
+    link *new1, *save;
+    new1 = (link *)malloc(sizeof(link));
+    new1->info = x;
+    new1->next = NULL;
+
+    if (start == NULL)
+        return new1;
+
+    save = start;
+    while (save->next != NULL)
+        save = save->next;
+
+    save->next = new1;
+    return start;
+}
+
+
+
